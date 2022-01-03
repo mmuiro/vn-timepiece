@@ -1,0 +1,25 @@
+# --- CLIENTSIDE ---
+# dependencies
+vntp-client/node_modules
+vntp-client/.pnp
+vntp-client/.pnp.js
+
+# testing
+vntp-client/coverage
+
+# production
+vntp-client/build
+
+# misc
+vntp-client/.DS_Store
+vntp-client/env.local
+vntp-client/.env.development.local
+vntp-client/.env.test.local
+vntp-client/.env.production.local
+
+vntp-client/npm-debug.log*
+vntp-client/yarn-debug.log*
+vntp-client/yarn-error.log*
+
+# --- SERVERSIDE ---
+server/node_modules
