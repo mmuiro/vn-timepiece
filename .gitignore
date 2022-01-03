@@ -12,7 +12,7 @@ vntp-client/build
 
 # misc
 vntp-client/.DS_Store
-vntp-client/env.local
+vntp-client/.env.local
 vntp-client/.env.development.local
 vntp-client/.env.test.local
 vntp-client/.env.production.local
