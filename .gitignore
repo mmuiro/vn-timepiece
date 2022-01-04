@@ -21,5 +21,8 @@ vntp-client/npm-debug.log*
 vntp-client/yarn-debug.log*
 vntp-client/yarn-error.log*
 
+vntp-client/.env
+
 # --- SERVERSIDE ---
 server/node_modules
+server/.env

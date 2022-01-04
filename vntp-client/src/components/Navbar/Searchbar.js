@@ -1,13 +1,17 @@
 import React from "react";
 import { useState } from "react";
+import { createSearchParams, useNavigate } from "react-router-dom";
 
 export default function Searchbar() {
     const [searchQuery, setSearchQuery] = useState('');
-    // server handles redirect
-    const handleSearch = async e => {
+    const navigate = useNavigate();
+    const handleSearch = e => {
         e.preventDefault();
-        // dummy code
-        await new Promise(r => setTimeout(() => alert(searchQuery), 500));
+        const params = {query: searchQuery};
+        navigate({
+            pathname: '/search',
+            search: `?${createSearchParams(params)}`
+        });
     }
 
     return(<form onSubmit={handleSearch} className="flex items-center p-1.5 rounded-md drop-shadow-sm bg-pink-600">
