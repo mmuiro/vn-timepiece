@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useSearchParams } from "react-router-dom";
 
 export default function SearchbarLarge({ changeFn, submitFn, value }) {
     return(<form onSubmit={submitFn} className="flex drop-shadow-md rounded-md bg-white p-4">

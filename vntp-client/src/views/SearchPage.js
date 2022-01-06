@@ -18,7 +18,7 @@ export default function SearchPage() {
 
     const performVNDBSearch = async (searchQuery) => {
         try {
-            const url = new URL(process.env.REACT_APP_API_URL + "/search/fetch");
+            const url = new URL(process.env.REACT_APP_API_URL + "/api/search/fetch");
             url.searchParams.append("searchQuery", searchQuery);
             url.searchParams.append("page", currentPage);
             const res = await fetch(url, {
@@ -43,12 +43,12 @@ export default function SearchPage() {
         }
     }, [searchParams]);
 
-    return(<div className="flex flex-col items-center p-4">
+    return(<div className="flex flex-col items-center p-4 bg-gray-100 min-h-screen">
         <SearchbarLarge changeFn={e => setSearchQuery(e.target.value)} submitFn={handleSearch} value={searchQuery} />
         <span>Provided by VNDB</span>
-        <div className="flex flex-col items-center justify-start">
+        <div className="grid grid-cols-3 mx-auto">
             {searchResults.map((entry, i) => (
-                <SearchEntry key={i} imageURL={entry.image} imageNSFW={entry.image_nsfw} title={entry.title} originalTitle={entry.original} />
+                <SearchEntry key={i} imageURL={entry.image} imageNSFW={entry.image_nsfw} title={entry.title} originalTitle={entry.original} lengthIndex={entry.length - 1} id={entry.id} originalLang={entry.orig_lang[0]}/>
             ))}
         </div>
     </div>);
