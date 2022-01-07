@@ -8,7 +8,7 @@ import Toggle from "./Toggle";
 const lengths = ["Very Short (<2 hrs)", "Short (2-10 hrs)", "Medium (10-30 hrs)", "Long (30-50 hrs)", "Very Long (50+ hrs)"];
 
 export default function SearchEntry({imageURL, imageNSFW, title, originalTitle, originalLang, lengthIndex, id}) {
-    const [showImg, setShowImg] = useState(true);
+    const [showImg, setShowImg] = useState(!imageNSFW);
     const [showOriginal, setShowOriginal] = useState(false);
 
     const handleAdd = async (e) => {
@@ -23,9 +23,12 @@ export default function SearchEntry({imageURL, imageNSFW, title, originalTitle, 
         });
     }
 
-    return <div className="transition flex items-start bg-white rounded-md h-32 drop-shadow-md w-[24rem] m-4 hover:-translate-y-1 hover:drop-shadow-xl">
+    return <div className="transition flex items-start bg-white rounded-md h-32 drop-shadow-md w-[24rem] m-3 hover:-translate-y-1 hover:drop-shadow-xl">
         <div className="h-full w-[28%] shrink-0 grow-0">
-            {imageNSFW ? <div className="h-full w-full flex flex-shrink-0 items-center justify-center"><button>NSFW</button></div> : <img src={imageURL} className="h-full w-full object-cover rounded-l-md mr-0" />}
+            {showImg ? 
+                <img src={imageURL} className="h-full w-full object-cover rounded-l-md mr-0" /> : 
+                <div className="bg-primary rounded-l-md text-white p-1 h-full w-full flex flex-col flex-shrink-0 items-center justify-center text-center text-xs">This image may contain sensitive content.<button onClick={() => setShowImg(true)} className="transition hover:text-primary-light">Show anyways</button></div>
+            }
         </div>
         <div className="relative flex flex-col w-[64%] shrink h-full py-3 mx-4 grow-0">
             <h1 className="truncate font-semibold text-lg drop-shadow-sm text-gray-800">{showOriginal ? originalTitle : title}</h1>
