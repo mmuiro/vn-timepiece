@@ -5,6 +5,7 @@ import Navbar from './components/Navbar/Navbar';
 import LandingPage from './views/LandingPage';
 import SearchPage from './views/SearchPage';
 import './index.css';
+import RegisterPage from './views/RegisterPage';
 
 ReactDOM.render(
   <Router>
@@ -12,6 +13,7 @@ ReactDOM.render(
     <Routes>
       <Route path="/" element={<LandingPage />}></Route>
       <Route path="/search" element={<SearchPage />}></Route>
+      <Route path="/register" element={<RegisterPage />} ></Route>
     </Routes>
   </Router>,
   document.getElementById('root')

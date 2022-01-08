@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 export default function Toggle({toggleFn, textLeft, textRight, colorLeft, colorRight, position, margin, toggled, setToggled}) {
     return (<div className={`flex items-center h-6 justify-center ${position} ${margin}`}>

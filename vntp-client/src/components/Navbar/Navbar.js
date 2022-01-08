@@ -19,6 +19,7 @@ export default function Navbar() {
                         <NavbarLink to="/" text="Home" />
                         <NavbarLink to="/history" text="History" />
                         <NavbarLink to="/profile" text="Profile" />
+                        <NavbarLink to="/register" text="Register" />
                     </div>
                 </div>
                 <div className="flex items-center justify-center">
