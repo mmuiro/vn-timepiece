@@ -9,6 +9,7 @@ export default function RegisterPage() {
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
     const [serverMsg, setServerMsg] = useState('');
+    const [success, setSuccess] = useState(false);
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -25,18 +26,21 @@ export default function RegisterPage() {
         });
         const json = await res.json();
         if (json.success) {
-            // create pop up directing user to login page
+            setServerMsg(json.message);
+            setSuccess(true);
         } else {
             setServerMsg(json.message);
+            setSuccess(false);
         }
     }
 
-    return(<div className="flex flex-col items-center py-24 bg-gray-50 min-h-screen max-w-7xl">
+    return(<div className="flex flex-col items-center py-24 bg-gray-50 min-h-screen">
         <FormBody size="w-[26rem] h-fit" title="Register">
             <FormEntry name="Username" setter={(e) => setUsername(e.target.value)} height="h-8" />
-            <FormEntry name="Password" setter={(e) => setPassword(e.target.value)}  height="h-8" />
+            <FormEntry name="Password" setter={(e) => setPassword(e.target.value)}  height="h-8" type="password" />
             <FormEntry name="Email" setter={(e) => setEmail(e.target.value)} height="h-8" />
-            <Button clickFn={handleRegister} size="w-52 h-8" text="Register" margin="mt-4"/>
+            <Button clickFn={handleRegister} size="w-full h-8" text="Register" margin="my-6"/>
+            {serverMsg !== '' && <p className={`text-center ${success ? "text-green-500" : "text-red-500"}`}>{serverMsg}</p>}
         </FormBody>
         
     </div>);

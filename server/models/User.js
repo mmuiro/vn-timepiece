@@ -1,6 +1,7 @@
-import mongoose, { mongo } from 'mongoose';
+import mongoose from 'mongoose';
 import validator from 'validator';
 import uniqueValidator from 'mongoose-unique-validator';
+import VNReadingEntry from './VNReadingEntry.js';
 
 const userSchema = mongoose.Schema({
     username: {
@@ -30,6 +31,7 @@ const userSchema = mongoose.Schema({
     }],
     settings: {
         type: Object
+        // set a default
     },
     registerDate: {
         type: Date,

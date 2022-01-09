@@ -17,9 +17,10 @@ export default function Navbar() {
                     </Link>
                     <div className="flex items-center justify-center">
                         <NavbarLink to="/" text="Home" />
-                        <NavbarLink to="/history" text="History" />
-                        <NavbarLink to="/profile" text="Profile" />
+                        { /*<NavbarLink to="/history" text="History" />
+                        <NavbarLink to="/profile" text="Profile" />  */}
                         <NavbarLink to="/register" text="Register" />
+                        <NavbarLink to="/login" text="Login" />
                     </div>
                 </div>
                 <div className="flex items-center justify-center">

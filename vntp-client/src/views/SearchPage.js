@@ -30,6 +30,7 @@ export default function SearchPage() {
                     method: 'GET',
                 });
                 const json = await res.json();
+                console.log(json.success)
                 if (json.success) {
                     let { more, results } = json;
                     setExistMoreResults(more);

@@ -13,7 +13,13 @@ const actionSchema = mongoose.Schema({
     },
     vnApplied: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'VN'
+        ref: 'VN',
+        required: true
+    },
+    readingEntry: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'VNReadingEntry',
+        required: true
     },
     originalPlayTime: {
         // only if type === "Modification"

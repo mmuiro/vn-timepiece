@@ -7,8 +7,8 @@ export default function Button({ text, size, margin, position, linkTo=null, clic
             <div className="transition-all absolute w-full rounded-md h-full flex justify-center items-center -top-1 bg-gradient-to-br from-pink-500 to-pink-700 drop-shadow-md group-hover:-top-0.5 group-hover:cursor-pointer">
                 {
                     (linkTo !== null) ?
-                    <Link to={linkTo} className="text-white font-medium">{text}</Link> :
-                    <button onClick={clickFn} className="text-white font-medium">{text}</button>
+                    <Link to={linkTo} className="text-white font-medium w-full h-full">{text}</Link> :
+                    <button onClick={clickFn} className="text-white font-medium w-full h-full">{text}</button>
                 }
             </div>
         </div>

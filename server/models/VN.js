@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import uniqueValidator from 'mongoose-unique-validator';
+import VNReadingEntry from './VNReadingEntry';
 
 const vnSchema = mongoose.Schema({
     vndbID: {

@@ -32,6 +32,19 @@ const vnReadingEntrySchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
+    },
+    startingEvent: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Action'
+    },
+    endingEvent: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Action'
+    },
+    playStatus: {
+        type: String,
+        required: true,
+        default: 'Not Started'
     }
 });
 
