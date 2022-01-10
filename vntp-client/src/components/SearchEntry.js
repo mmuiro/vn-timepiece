@@ -1,26 +1,29 @@
 import React from "react";
 import { useState } from "react";
 import { BsClock } from "react-icons/bs";
-import { AiOutlineClockCircle } from "react-icons/ai";
 import Button from "./Button";
 import Toggle from "./Toggle";
+import { useNavigate } from "react-router-dom";
+import fetchWithAuth from "../utils/fetchWithAuth";
 
 const lengths = ["Very Short (<2 hrs)", "Short (2-10 hrs)", "Medium (10-30 hrs)", "Long (30-50 hrs)", "Very Long (50+ hrs)"];
 
 export default function SearchEntry({imageURL, imageNSFW, title, originalTitle, originalLang, lengthIndex, id}) {
     const [showImg, setShowImg] = useState(!imageNSFW);
     const [showOriginal, setShowOriginal] = useState(false);
+    const navigate = useNavigate();
 
     const handleAdd = async (e) => {
         e.preventDefault();
         const url = new URL(process.env.REACT_APP_API_URL + "/api/novel/add")
-        const res = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ id: id })
-        });
+        const res = await fetchWithAuth(url, 'POST', JSON.stringify({ id: id }));
+        const json = await res.json();
+        if(json.success) {
+            navigate(`/novel?id=${json.readingEntryID}`);
+        } else {
+            // create pop up of failure.
+            alert(json.message);
+        }
     }
 
     return <div className="transition flex items-start bg-white rounded-md h-32 drop-shadow-md w-[24rem] m-3 hover:-translate-y-1 hover:drop-shadow-xl">
@@ -40,7 +43,7 @@ export default function SearchEntry({imageURL, imageNSFW, title, originalTitle, 
             }
             <div className="absolute bottom-3 flex items-center h-[24%] justify-between w-full">
                 {originalTitle !== null ? <Toggle colorLeft="bg-primary-dark" colorRight="bg-rose-600" textLeft="EN" textRight={originalLang.toUpperCase()} toggled={showOriginal} setToggled={(showOriginal) => setShowOriginal(showOriginal)}/> : null}
-                <Button text="Add" size="w-[40%] h-full"></Button>
+                <Button text="Add" size="w-[40%] h-full" clickFn={handleAdd}></Button>
             </div>
         </div>
     </div>

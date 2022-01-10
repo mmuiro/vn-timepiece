@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import fetchWithAuth from "../utils/fetchWithAuth";
 import FormBody from "../components/Form/FormBody";
 import FormEntry from "../components/Form/FormEntry";
 import Button from "../components/Button";
@@ -13,17 +14,12 @@ export default function RegisterPage() {
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        const res = await fetch(process.env.REACT_APP_API_URL + '/api/user/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+        const res = await fetchWithAuth(process.env.REACT_APP_API_URL + '/api/user/register', 'POST',
+            JSON.stringify({
                 username: username,
                 password: password,
                 email: email
-            })
-        });
+            }));
         const json = await res.json();
         if (json.success) {
             setServerMsg(json.message);

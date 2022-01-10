@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/auth";
 import NavbarLink from "./NavbarLink";
 import Searchbar from "./Searchbar";
 
 export default function Navbar() {
+    const { authState } = useContext(AuthContext);
     return(<>
     <nav className="bg-primary drop-shadow-sm border-b-2 border-pink-600">
         <div className="max-w-7xl mx-auto">
@@ -17,10 +19,9 @@ export default function Navbar() {
                     </Link>
                     <div className="flex items-center justify-center">
                         <NavbarLink to="/" text="Home" />
-                        { /*<NavbarLink to="/history" text="History" />
-                        <NavbarLink to="/profile" text="Profile" />  */}
-                        <NavbarLink to="/register" text="Register" />
-                        <NavbarLink to="/login" text="Login" />
+                        { authState.signedIn ? 
+                        <><NavbarLink to="/history" text="History" /><NavbarLink to="/profile" text="Profile" /></> :
+                        <><NavbarLink to="/register" text="Register" /><NavbarLink to="/login" text="Login" /></> }
                     </div>
                 </div>
                 <div className="flex items-center justify-center">

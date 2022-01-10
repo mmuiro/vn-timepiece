@@ -1,36 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import Cookies from "universal-cookie";
 import FormEntry from "../components/Form/FormEntry";
 import FormBody from "../components/Form/FormBody";
 import Button from "../components/Button";
+import fetchWithAuth from "../utils/fetchWithAuth";
+import { AuthContext } from "../context/auth";
 
 export default function LoginPage() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [serverMsg, setServerMsg] = useState('');
     const [success, setSuccess] = useState(false);
-    const cookies = new Cookies();
     const navigate = useNavigate();
+    const { authState, updateSignedIn } = useContext(AuthContext);
+
+    useEffect(() => {
+        if (authState.signedIn) navigate("/");
+    }, [authState]);
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        const res = await fetch('/api/user/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username, password })
-        });
+        const res = await fetchWithAuth('/api/user/login', 'POST', JSON.stringify({ username, password }));
         const json = await res.json();
         setServerMsg(json.message);
         if (json.success) {
             setSuccess(true);
-            cookies.set('authToken', json.authToken);
-            navigate("/home");
-        } else {
-            setSuccess(false);
-        }
+            localStorage.setItem('authToken', json.authToken);
+            updateSignedIn();
+        } else setSuccess(false);
     }
 
     return(<div className="flex flex-col items-center py-24 bg-gray-50 min-h-screen">

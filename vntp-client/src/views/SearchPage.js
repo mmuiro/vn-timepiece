@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import fetchWithAuth from "../utils/fetchWithAuth";
 import Button from "../components/Button";
 import SearchbarLarge from "../components/SearchbarLarge";
 import SearchEntry from "../components/SearchEntry";
@@ -26,11 +27,8 @@ export default function SearchPage() {
                 const url = new URL(process.env.REACT_APP_API_URL + "/api/search/fetch");
                 url.searchParams.append("searchQuery", searchQuery);
                 url.searchParams.append("page", currentPage);
-                const res = await fetch(url, {
-                    method: 'GET',
-                });
+                const res = await fetchWithAuth(url, 'GET');
                 const json = await res.json();
-                console.log(json.success)
                 if (json.success) {
                     let { more, results } = json;
                     setExistMoreResults(more);
