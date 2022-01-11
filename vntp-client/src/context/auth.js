@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import fetchWithAuth from '../utils/fetchWithAuth';
+import LoadingPage from '../views/LoadingPage';
 
 const AuthContext = React.createContext();
 
 function AuthContextProvider({ children }) {
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [authState, setAuthState] = useState({
         signedIn: undefined,
         username: null,
@@ -29,15 +30,16 @@ function AuthContextProvider({ children }) {
                 email: null
             });
         }
+        await new Promise(r => setTimeout(r, 750));
         setLoading(false);
     }
 
     useEffect(() => {
         updateSignedIn();
-    }, []);
+    },[]);
 
     return (<AuthContext.Provider value={{ authState, updateSignedIn }}>
-        {loading ? <h1>Loading...</h1> : children}
+        {loading ? <LoadingPage /> : children}
     </AuthContext.Provider>);   
 }
 

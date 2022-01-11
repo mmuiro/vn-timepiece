@@ -16,10 +16,12 @@ export default function SearchEntry({imageURL, imageNSFW, title, originalTitle, 
     const handleAdd = async (e) => {
         e.preventDefault();
         const url = new URL(process.env.REACT_APP_API_URL + "/api/novel/add")
-        const res = await fetchWithAuth(url, 'POST', JSON.stringify({ id: id }));
+        let body = { vndbID: id, title: title };
+        if (originalTitle) body.originalTitle = originalTitle;
+        const res = await fetchWithAuth(url, 'POST', JSON.stringify(body));
         const json = await res.json();
         if(json.success) {
-            navigate(`/novel?id=${json.readingEntryID}`);
+            navigate(`/reader?id=${json.vndbID}`);
         } else {
             // create pop up of failure.
             alert(json.message);

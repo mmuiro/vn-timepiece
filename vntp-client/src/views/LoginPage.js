@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FormEntry from "../components/Form/FormEntry";
 import FormBody from "../components/Form/FormBody";
 import Button from "../components/Button";
@@ -34,8 +34,9 @@ export default function LoginPage() {
         <FormBody size="w-[26rem] h-fit" title="Login">
             <FormEntry name="Username" setter={(e) => setUsername(e.target.value)} height="h-8" />
             <FormEntry name="Password" setter={(e) => setPassword(e.target.value)}  height="h-8" type="password" />
-            <Button clickFn={handleLogin} size="w-full h-8" text="Login" margin="my-6"/>
-            {serverMsg !== '' && <p className={`text-center ${success ? "text-green-500" : "text-red-500"}`}>{serverMsg}</p>}
+            <Button clickFn={handleLogin} size="w-full h-8" text="Login" margin="mt-6"/>
+            <p className="text-sm mt-4">Don't have an account yet? <Link className="inline text-primary" to="/register">Register here.</Link></p>
+            {serverMsg !== '' && <p className={`text-center ${success ? "text-green-500" : "text-red-500"} mt-4`}>{serverMsg}</p>}
         </FormBody>
     </div>);
 }

@@ -18,7 +18,10 @@ export default function SearchPage() {
         setSearchResults([]);
         setCurrentPage(1);
         setSearchQuery(searchParams.get('query'));
-        setSearchReady(true);
+        setExistMoreResults(false);
+        if (searchParams.get('query')) {
+            setSearchReady(true);
+        }
     }, [searchParams]);
 
     useEffect(() => {
@@ -36,13 +39,11 @@ export default function SearchPage() {
                     setSearchResults(searchResults => [...searchResults, ...results]);
                     setSearchReady(false);
                 }
-            } catch (err) {
-                console.log(err);
-            }
+            } catch { }
         };
         if (searchReady && searchQuery !== null && searchQuery !== '') {
             performVNDBSearch(searchQuery);
-        }
+        } 
     }, [searchReady]);
 
     const handleSearch = e => {
@@ -50,16 +51,14 @@ export default function SearchPage() {
         setSearchParams({ query: searchQuery });
     };
 
-
-
     return(<div className="flex flex-col items-center p-4 bg-gray-50 min-h-screen max-w-7xl">
-        <SearchbarLarge changeFn={e => setSearchQuery(e.target.value)} submitFn={handleSearch} value={searchQuery} />
+        <SearchbarLarge changeFn={e => setSearchQuery(e.target.value)} submitFn={handleSearch} value={searchQuery ? searchQuery : ''} />
         <span>Provided by VNDB</span>
         <div className="flex justify-center flex-wrap mx-auto w-full">
             {searchResults.map((entry, i) => (
                 <SearchEntry key={i} imageURL={entry.image} imageNSFW={entry.image_nsfw} title={entry.title} originalTitle={entry.original} lengthIndex={entry.length - 1} id={entry.id} originalLang={entry.orig_lang[0]}/>
             ))}
         </div>
-        {existMoreResults && <Button clickFn={() => setSearchReady(true)} size="w-40 h-8" text="More Results" margin="m-3"/>}
+        {existMoreResults && <Button clickFn={() => {if (searchParams.get('query')) setSearchReady(true) }} size="w-40 h-8" text="More Results" margin="m-3"/>}
     </div>);
 }
