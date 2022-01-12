@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import uniqueValidator from "mongoose-unique-validator";
 
 const actionSchema = mongoose.Schema({
     type: {
@@ -8,8 +7,7 @@ const actionSchema = mongoose.Schema({
     },
     date: {
         type: Date,
-        required: true,
-        default: Date.now
+        required: true
     },
     vnApplied: {
         type: mongoose.Schema.Types.ObjectId,
@@ -27,9 +25,12 @@ const actionSchema = mongoose.Schema({
     },
     modifiedPlayTime: {
         // only if type === "Modification"
-        type:Number
+        type: Number
+    },
+    readingTime: {
+        // only if type === "Reading"
+        type: Number
     }
 });
 
-actionSchema.plugin(uniqueValidator);
 export default mongoose.model('Action', actionSchema);

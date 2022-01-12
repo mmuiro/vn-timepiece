@@ -1,7 +1,4 @@
 import mongoose from 'mongoose';
-import validator from 'validator';
-import uniqueValidator from 'mongoose-unique-validator';
-import VNReadingEntry from './VNReadingEntry.js';
 
 const userSchema = mongoose.Schema({
     username: {
@@ -18,8 +15,7 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-        uniqueCaseInsensitive: true,
-        validate: { validator: validator.isEmail, message: 'Invalid email.' }
+        uniqueCaseInsensitive: true
     },
     history: {
         type: mongoose.Schema.Types.ObjectId,
@@ -40,19 +36,32 @@ const userSchema = mongoose.Schema({
     }
 });
 
-userSchema.virtual("totalPlayTime").get(async function() {
-    await VNReadingEntry.find({ user: this.id }, (err, readingList) => {
-        if (err) {
-            return 0;
-        } else {
-            let total = 0;
-            readingList.forEach(entry => {
-                total += entry.playTime;
-            });
-            return total;
-        }
-    })
+userSchema.virtual("totalPlayTime").get(function() {
+    let total = 0;
+    this.vnList.forEach(entry => {
+        total += entry.playTime;
+    });
+    return total;
 });
 
-userSchema.plugin(uniqueValidator);
+userSchema.virtual("numVNsCompleted").get(function() {
+    return this.vnList.filter(entry => entry.completed).length;
+});
+
+userSchema.virtual("numVNsStarted").get(function() {
+    return this.vnList.filter(entry => entry.started).length;
+});
+
+userSchema.virtual("mostRecentEntry").get(function() {
+    return this.vnList.length > 0 ? this.vnList.sort((entry1, entry2) => entry2.lastModifiedDate - entry1.lastModifiedDate)[0] : null;
+});
+
+userSchema.virtual("lastReadVN").get(function() {
+    return this.mostRecentEntry && this.mostRecentEntry.vn;
+});
+
+userSchema.virtual("lastActiveDate").get(function() {
+    return this.mostRecentEntry !== null && this.mostRecentEntry.lastModifiedDate !== undefined ? this.mostRecentEntry.lastModifiedDate : this.registerDate;
+});
+
 export default mongoose.model('User', userSchema);

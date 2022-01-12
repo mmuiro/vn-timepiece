@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import uniqueValidator from 'mongoose-unique-validator';
 
 const vnReadingEntrySchema = mongoose.Schema({
     vn: {
@@ -7,10 +6,13 @@ const vnReadingEntrySchema = mongoose.Schema({
         ref: 'VN',
         required: true
     },
-    startDate: {
+    addedDate: {
         type: Date,
         required: true,
         default: Date.now
+    },
+    startDate: {
+        type: Date
     },
     completeDate: {
         type: Date
@@ -23,23 +25,20 @@ const vnReadingEntrySchema = mongoose.Schema({
         required: true,
         default: 0
     },
+    started: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
     completed: {
         type: Boolean,
         required: true,
-        completed: false
+        default: false
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
-    },
-    startingEvent: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Action'
-    },
-    endingEvent: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Action'
     },
     playStatus: {
         type: String,
@@ -48,5 +47,4 @@ const vnReadingEntrySchema = mongoose.Schema({
     }
 });
 
-vnReadingEntrySchema.plugin(uniqueValidator);
 export default mongoose.model('VNReadingEntry', vnReadingEntrySchema);

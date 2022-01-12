@@ -1,13 +1,19 @@
 import mongoose from 'mongoose';
-import uniqueValidator from 'mongoose-unique-validator';
-import VNReadingEntry from './VNReadingEntry';
+import VNReadingEntry from './VNReadingEntry.js';
 
 const vnSchema = mongoose.Schema({
     vndbID: {
         type: Number,
         required: true,
         unique: true
-    },
+    }, 
+    title: {
+        type: String,
+        required: true
+    }, 
+    originalTitle: {
+        type: String
+    }
 });
 
 vnSchema.virtual('averagePlayTime').get(async function() {
@@ -34,5 +40,4 @@ vnSchema.virtual('numCompletedUsers').get(async function() {
     });
 })
 
-vnSchema.plugin(uniqueValidator);
 export default mongoose.model('VN', vnSchema);
