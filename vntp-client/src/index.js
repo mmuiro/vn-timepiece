@@ -8,10 +8,9 @@ import RegisterPage from './views/RegisterPage';
 import LoginPage from './views/LoginPage';
 import ProfilePage from './views/ProfilePage';
 import LogoutPage from './views/LogoutPage';
+import HistoryPage from './views/HistoryPage';
 import { AuthContextProvider } from './context/auth';
 import './index.css';
-
-
 
 ReactDOM.render(
   <AuthContextProvider>
@@ -24,6 +23,7 @@ ReactDOM.render(
         <Route path="/login" element={<LoginPage />} ></Route>
         <Route path="/logout" element={<LogoutPage />} ></Route>
         <Route path="/profile" element={<ProfilePage />} ></Route>
+        <Route path="/history" element={<HistoryPage />} ></Route>
       </Routes>
     </Router>
   </AuthContextProvider>

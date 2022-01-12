@@ -17,9 +17,11 @@ export default function ProfilePage() {
 
     useEffect(() => {
         async function getProfile() {
-            const res = await fetchWithAuth("/api/user/profile", "GET");
+            const res = await fetchWithAuth('/api/user/profile', 'GET');
             const json = await res.json();
             if (json.success) {
+                json.userData.registerDate = (new Date(json.userData.registerDate)).toLocaleDateString();
+                json.userData.lastActiveDate = (new Date(json.userData.lastActiveDate)).toLocaleDateString();
                 setUserData(json.userData);
                 setLoaded(true);
             } else {

@@ -17,4 +17,25 @@ function msToTimeString(timeInMs, include=['hours', 'minutes', 'seconds']) {
     return include.map(unit => amounts[unit] + abbreviations[unit]).join(' ');
 }
 
-export { msToTime, msToTimeString };
+function msToTimeStringFull(timeInMs, include=['hours', 'minutes', 'seconds']) {
+    const amounts = msToTime(timeInMs);
+    return include.map(unit => amounts[unit] + " " + unit).join(', ');
+}
+
+function monthOrDayAbbreviationToFull(input) {
+    const abbrvToFull = {
+        'Mon': 'Monday', 'Tue': 'Tuesday', 'Wed': 'Wednesday', 'Thu': 'Thursday', 'Fri': 'Friday', 'Sat': 'Saturday', 'Sun': 'Sunday',
+        'Jan': 'January', 'Feb': 'February', 'Mar': 'March', 'Apr': 'April', 'May': 'May', 'Jun': 'June',
+        'Jul': 'July', 'Aug': 'August', 'Sep': 'September', 'Oct': 'October', 'Nov': 'November', 'Dec': 'December'
+    }
+    return abbrvToFull[input];
+}
+
+function dateToFullDateString(date) {
+    date = date.toDateString().split(' ');
+    date[0] = monthOrDayAbbreviationToFull(date[0]) + ",";
+    date[1] = monthOrDayAbbreviationToFull(date[1]);
+    return date.join(' ');
+}
+
+export { msToTime, msToTimeString, msToTimeStringFull, dateToFullDateString };

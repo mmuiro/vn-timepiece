@@ -1,14 +1,14 @@
 import React from "react";
 import { useState } from "react";
 import { BsClock } from "react-icons/bs";
-import Button from "./Button";
-import Toggle from "./Toggle";
+import Button from "../Button";
+import Toggle from "../Toggle";
 import { useNavigate } from "react-router-dom";
-import fetchWithAuth from "../utils/fetchWithAuth";
+import fetchWithAuth from "../../utils/fetchWithAuth";
 
 const lengths = ["Very Short (<2 hrs)", "Short (2-10 hrs)", "Medium (10-30 hrs)", "Long (30-50 hrs)", "Very Long (50+ hrs)"];
 
-export default function SearchEntry({imageURL, imageNSFW, title, originalTitle, originalLang, lengthIndex, id}) {
+export default function SearchEntryCard({imageURL, imageNSFW, title, originalTitle, originalLang, lengthIndex, id}) {
     const [showImg, setShowImg] = useState(!imageNSFW);
     const [showOriginal, setShowOriginal] = useState(false);
     const navigate = useNavigate();
@@ -21,7 +21,7 @@ export default function SearchEntry({imageURL, imageNSFW, title, originalTitle, 
         const res = await fetchWithAuth(url, 'POST', JSON.stringify(body));
         const json = await res.json();
         if(json.success) {
-            navigate(`/reader?id=${json.vndbID}`);
+            navigate("/");
         } else {
             // create pop up of failure.
             alert(json.message);

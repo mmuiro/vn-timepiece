@@ -14,9 +14,12 @@ export default function UserHomePage() {
 
     const processVNList = vnList => {
         vnList.forEach(entry => {
+            entry.addedDate = (new Date(entry.addedDate)).toLocaleDateString();
             if (entry.completed) {
+                entry.completeDate = (new Date(entry.completeDate)).toLocaleDateString();
                 completedVNList.push(entry);
             } else if (entry.started) {
+                entry.startDate = (new Date(entry.startDate)).toLocaleDateString();
                 startedVNList.push(entry);
             } else {
                 notStartedVNList.push(entry);

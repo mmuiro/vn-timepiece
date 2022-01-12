@@ -5,7 +5,6 @@ import { AuthContext } from "../context/auth";
 export default function LogoutPage() {
     const { authState, updateSignedIn } = useContext(AuthContext);
     const navigate = useNavigate();
-
     useEffect(() => {
         if (authState.signedIn === false) navigate("/login");
     }, [authState]);
