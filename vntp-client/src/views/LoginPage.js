@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import FormEntry from "../components/Form/FormEntry";
 import FormBody from "../components/Form/FormBody";
-import Button from "../components/Button";
+import Button from "../components/Buttons/Button";
 import fetchWithAuth from "../utils/fetchWithAuth";
 import { AuthContext } from "../context/auth";
 
@@ -34,7 +34,7 @@ export default function LoginPage() {
         <FormBody size="w-[26rem] h-fit" title="Login">
             <FormEntry name="Username" setter={(e) => setUsername(e.target.value)} height="h-8" />
             <FormEntry name="Password" setter={(e) => setPassword(e.target.value)}  height="h-8" type="password" />
-            <Button clickFn={handleLogin} size="w-full h-8" text="Login" margin="mt-6"/>
+            <Button clickFn={handleLogin} size="w-full h-8" margin="mt-6"><span className="text-white font-medium">Login</span></Button>
             <p className="text-sm mt-4">Don't have an account yet? <Link className="inline text-primary" to="/register">Register here.</Link></p>
             {serverMsg !== '' && <p className={`text-center ${success ? "text-green-500" : "text-red-500"} mt-4`}>{serverMsg}</p>}
         </FormBody>

@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { BsClock } from "react-icons/bs";
-import Button from "../Button";
+import Button from "../Buttons/Button";
 import Toggle from "../Toggle";
 import { useNavigate } from "react-router-dom";
 import fetchWithAuth from "../../utils/fetchWithAuth";
@@ -45,7 +45,7 @@ export default function SearchEntryCard({imageURL, imageNSFW, title, originalTit
             }
             <div className="absolute bottom-3 flex items-center h-[24%] justify-between w-full">
                 {originalTitle !== null ? <Toggle colorLeft="bg-primary-dark" colorRight="bg-rose-600" textLeft="EN" textRight={originalLang.toUpperCase()} toggled={showOriginal} setToggled={(showOriginal) => setShowOriginal(showOriginal)}/> : null}
-                <Button text="Add" size="w-[40%] h-full" clickFn={handleAdd}></Button>
+                <Button size="w-[40%] h-full" clickFn={handleAdd}><span className="text-white font-medium">Add</span></Button>
             </div>
         </div>
     </div>

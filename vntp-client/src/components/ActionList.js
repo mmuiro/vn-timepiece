@@ -27,7 +27,6 @@ export default function ActionList({username, actionList}) {
             dateGroupedActionList.push(dateObj);
         });
         setDateGroupedActionList(dateGroupedActionList);
-        console.log(dateGroupedActionList);
     }
 
     useEffect(() => {

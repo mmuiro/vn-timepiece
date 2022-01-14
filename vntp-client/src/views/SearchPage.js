@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import fetchWithAuth from "../utils/fetchWithAuth";
-import Button from "../components/Button";
+import Button from "../components/Buttons/Button";
 import SearchbarLarge from "../components/SearchbarLarge";
 import SearchEntryCard from "../components/Cards/SearchEntryCard";
 

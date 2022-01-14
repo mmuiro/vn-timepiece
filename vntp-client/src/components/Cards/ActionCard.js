@@ -8,23 +8,23 @@ export default function ActionCard({title, type, originalPlayTime=undefined, mod
     let icon, textElement;
     switch (type) {
         case 'Start':
-            icon = <HiPlay className="text-white w-10 h-10" />;
+            icon = <HiPlay className="text-white w-8 h-8" />;
             textElement = <span>Started reading <p className="inline text-primary">{title}</p></span>;
             break;
         case 'Completion':
-            icon = <HiFlag className="text-white" />;
+            icon = <HiFlag className="text-white w-8 h-8" />;
             textElement = <span>Finished reading <p className="inline text-primary">{title}</p></span>;
             break;
         case 'Reading':
-            icon = <VscDebugContinue className="text-white" />;
+            icon = <VscDebugContinue className="text-white w-8 h-8" />;
             textElement = <span>Read <p className="inline text-primary">{title}</p> for {msToTimeStringFull(readingTime)}</span>;
             break;
         case 'Modification':
-            icon = <HiOutlineAdjustments className="text-white" />;
+            icon = <HiOutlineAdjustments className="text-white w-8 h-8" />;
             textElement = <span>Changed play time for <p className="inline text-primary">{title}</p> from {msToTimeString(originalPlayTime)} to {msToTimeString(modifiedPlayTime)}</span>;
             break;
         case 'CompletionReversion':
-            icon = <CgUndo className="text-white" />;
+            icon = <CgUndo className="text-white w-8 h-8" />;
             textElement = <span>Marked <p className="inline text-primary">{title}</p> as incomplete</span>;
             break;
     }

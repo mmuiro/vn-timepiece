@@ -1,4 +1,4 @@
-import express from "express";
+import express, { json } from "express";
 import User from "../models/User.js";
 import VN from "../models/VN.js";
 import Action from "../models/Action.js";
@@ -14,6 +14,7 @@ router.post("/addAction", checkSignedIn, async (req, res) => {
     try {
         let { vndbID, type } = req.body,
             user = req.user;
+        if ((typeof vndbID === 'string' && typeof vndbID === 'number') ||  typeof type !== 'string') return res.json({success: false, message: "Please provide a valid action."});
         const vn = await VN.findOne({ vndbID });
         let currentDate = new Date();
         if (!vn) return res.json({success: false, message: "Please add that VN first."});
@@ -26,23 +27,27 @@ router.post("/addAction", checkSignedIn, async (req, res) => {
                 if (!vnReadingEntry.started) { 
                     vnReadingEntry.started = true;
                     vnReadingEntry.startDate = currentDate;
+                    vnReadingEntry.playStatus = 'Playing';
                 } else { throw typeCheckerError; }
                 break;
             case 'Completion':
                 if (vnReadingEntry.started && !vnReadingEntry.completed) {
                     vnReadingEntry.completed = true;
                     vnReadingEntry.completeDate = currentDate;
+                    vnReadingEntry.playStatus = 'Completed';
                 } else { throw typeCheckerError; }
                 break;
             case 'Reading':
                 if (vnReadingEntry.started && !vnReadingEntry.completed) {
-                    let readingTime = parseInt(req.body.readingTime);
+                    let readingTime = Number(req.body.readingTime);
                     newAction.readingTime = readingTime;
                     vnReadingEntry.playTime += readingTime;
+                    // console.log(typeof req.body.readingTime);
                 } else { throw typeCheckerError; }
+                break;
             case 'Modification':
                 if (vnReadingEntry.started) {
-                    let modifiedPlayTime = parseInt(req.body.modifiedPlayTime);
+                    let modifiedPlayTime = Number(req.body.modifiedPlayTime);
                     if (modifiedPlayTime < 0) return res.json({success: false, message: "Please provide a valid action."});
                     newAction.originalPlayTime = vnReadingEntry.playTime;
                     newAction.modifiedPlayTime = modifiedPlayTime;
@@ -53,6 +58,7 @@ router.post("/addAction", checkSignedIn, async (req, res) => {
                 if (vnReadingEntry.completed) {
                     vnReadingEntry.completed = false;
                     vnReadingEntry.completeDate = undefined;
+                    vnReadingEntry.playStatus = 'Playing';
                 } else { throw typeCheckerError; }
                 break;
             default:
@@ -79,7 +85,22 @@ router.post("/addAction", checkSignedIn, async (req, res) => {
 });
 
 router.get("/view", checkSignedIn, async(req, res) => {
-    // retrieve data on play time, etc. for rendering the view page
+    try {
+        let id = req.query.id;
+        if (typeof id !== 'string') return res.json({success: false, message: "Please send a valid ID."});
+        const vn = await VN.findOne({vndbID: id});
+        if (!vn) return res.json({success: false, message: "Couldn't find that visual novel. Try adding it to your reading list first."});
+        const vnReadingEntry = await VNReadingEntry.findOne({vn: vn._id, user: req.user._id});
+        if (!vnReadingEntry || !vnReadingEntry.started) return res.json({success: false, message: "You haven't started reading that visual novel yet."});
+        return res.json({success: true, message: "Retrieved reading entry data successfully.", readingEntryData: {
+            title: vn.title,
+            totalPlayTime: vnReadingEntry.playTime,
+            completed: vnReadingEntry.completed
+        }});
+    } catch (err) {
+        console.log(err);
+        return res.json({success: false, message: "An error occurred in processing your request."});
+    }
 });
 
 export default router;

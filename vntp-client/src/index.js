@@ -11,6 +11,7 @@ import LogoutPage from './views/LogoutPage';
 import HistoryPage from './views/HistoryPage';
 import { AuthContextProvider } from './context/auth';
 import './index.css';
+import ReadingTimerPage from './views/ReadingTimerPage';
 
 ReactDOM.render(
   <AuthContextProvider>
@@ -24,6 +25,7 @@ ReactDOM.render(
         <Route path="/logout" element={<LogoutPage />} ></Route>
         <Route path="/profile" element={<ProfilePage />} ></Route>
         <Route path="/history" element={<HistoryPage />} ></Route>
+        <Route path="/reader/:vndbID" element={<ReadingTimerPage />}></Route>
       </Routes>
     </Router>
   </AuthContextProvider>

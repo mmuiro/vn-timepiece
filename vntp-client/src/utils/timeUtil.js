@@ -38,4 +38,9 @@ function dateToFullDateString(date) {
     return date.join(' ');
 }
 
-export { msToTime, msToTimeString, msToTimeStringFull, dateToFullDateString };
+function msToTimeDisplayString(timeInMS) {
+    const amounts = msToTime(timeInMS);
+    return `${amounts.hours.toString().padStart(2, '0')}:${amounts.minutes.toString().padStart(2, '0')}:${amounts.seconds.toString().padStart(2, '0')}`;
+}
+
+export { msToTime, msToTimeString, msToTimeStringFull, dateToFullDateString, msToTimeDisplayString };

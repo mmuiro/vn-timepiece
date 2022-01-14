@@ -17,9 +17,11 @@ export default function UserHomePage() {
             entry.addedDate = (new Date(entry.addedDate)).toLocaleDateString();
             if (entry.completed) {
                 entry.completeDate = (new Date(entry.completeDate)).toLocaleDateString();
+                entry.startDate = (new Date(entry.startDate)).toLocaleDateString();
                 completedVNList.push(entry);
             } else if (entry.started) {
                 entry.startDate = (new Date(entry.startDate)).toLocaleDateString();
+                entry.lastPlayedDate = (new Date(entry.lastModifiedDate)).toLocaleDateString();
                 startedVNList.push(entry);
             } else {
                 notStartedVNList.push(entry);
@@ -43,7 +45,6 @@ export default function UserHomePage() {
             if (json.success) {
                 setUsername(json.userData.username)
                 processVNList(json.userData.vnList);
-                console.log(notStartedVNList);
                 setSuccess(true);
             } else {
                 setSuccess(false);

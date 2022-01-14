@@ -5,7 +5,7 @@ import ConnectorLine from "./ConnectorLine";
 export default function ActionCardGroup({date, actionList, connector}) {
     return (<div className="flex w-full h-fit justify-start mb-28">
         <div className="w-[24%] flex items-center justify-start">
-            <span className="text-lg text-gray-700 drop-shadow-md">{date}</span>
+            <span className="text-lg text-gray-700 drop-shadow-sm">{date}</span>
         </div>
         <div className="relative flex flex-col items-center justify-start flex-grow h-fit">
             {

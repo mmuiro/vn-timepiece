@@ -3,7 +3,7 @@ import { useState } from "react";
 import fetchWithAuth from "../utils/fetchWithAuth";
 import FormBody from "../components/Form/FormBody";
 import FormEntry from "../components/Form/FormEntry";
-import Button from "../components/Button";
+import Button from "../components/Buttons/Button";
 
 export default function RegisterPage() {
     const [username, setUsername] = useState('');
@@ -35,7 +35,7 @@ export default function RegisterPage() {
             <FormEntry name="Username" setter={(e) => setUsername(e.target.value)} height="h-8" />
             <FormEntry name="Password" setter={(e) => setPassword(e.target.value)}  height="h-8" type="password" />
             <FormEntry name="Email" setter={(e) => setEmail(e.target.value)} height="h-8" />
-            <Button clickFn={handleRegister} size="w-full h-8" text="Register" margin="my-6"/>
+            <Button clickFn={handleRegister} size="w-full h-8" margin="my-6"><span className="text-white font-medium">Register</span></Button>
             {serverMsg !== '' && <p className={`text-center ${success ? "text-green-500" : "text-red-500"}`}>{serverMsg}</p>}
         </FormBody>
         
