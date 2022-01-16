@@ -87,7 +87,7 @@ router.post("/addAction", checkSignedIn, async (req, res) => {
 router.get("/view", checkSignedIn, async(req, res) => {
     try {
         let id = req.query.id;
-        if (typeof id !== 'string') return res.json({success: false, message: "Please send a valid ID."});
+        if (typeof id !== 'string' && typeof id !== 'number') return res.json({success: false, message: "Please send a valid ID."});
         const vn = await VN.findOne({vndbID: id});
         if (!vn) return res.json({success: false, message: "Couldn't find that visual novel. Try adding it to your reading list first."});
         const vnReadingEntry = await VNReadingEntry.findOne({vn: vn._id, user: req.user._id});

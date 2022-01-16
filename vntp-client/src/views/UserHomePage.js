@@ -15,16 +15,15 @@ export default function UserHomePage() {
     const processVNList = vnList => {
         vnList.forEach(entry => {
             entry.addedDate = (new Date(entry.addedDate)).toLocaleDateString();
-            if (entry.completed) {
-                entry.completeDate = (new Date(entry.completeDate)).toLocaleDateString();
-                entry.startDate = (new Date(entry.startDate)).toLocaleDateString();
-                completedVNList.push(entry);
-            } else if (entry.started) {
+            if (!entry.started) {
+                notStartedVNList.push(entry);
+            } else {
                 entry.startDate = (new Date(entry.startDate)).toLocaleDateString();
                 entry.lastPlayedDate = (new Date(entry.lastModifiedDate)).toLocaleDateString();
-                startedVNList.push(entry);
-            } else {
-                notStartedVNList.push(entry);
+                if (entry.completed) {
+                    entry.completeDate = (new Date(entry.completeDate)).toLocaleDateString();
+                    completedVNList.push(entry);
+                } else { startedVNList.push(entry); }
             }
         });
         const sortFunction = (e1, e2) => {

@@ -8,6 +8,9 @@ module.exports = {
         "primary": "#ec4899",
         "primary-light": "#f9a8d4",
         "primary-dark": "#be185d"
+      },
+      fontSize: {
+        '10xl': '9rem'
       }
     },
   },

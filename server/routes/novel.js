@@ -12,7 +12,10 @@ router.post("/add", checkSignedIn, async (req, res) => {
     try {
         const { vndbID, title, originalTitle } = req.body,
             user = req.user;
-        let vn = await VN.findOne({ vndbID});
+        if (!(typeof vndbID === 'string' || typeof vndbID === 'number') || typeof title !== 'string' || typeof originalTitle !== 'string') {
+            return res.json({success: false, message: "Please send valid parameters."});
+        }
+        let vn = await VN.findOne({ vndbID });
         if (!vn) {
             // create the global VN entry
             vn = new VN({ vndbID, title });
