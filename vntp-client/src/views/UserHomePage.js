@@ -2,10 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import ReadingEntryList from "../components/ReadingEntryList";
 import { AuthContext } from "../context/auth";
 import fetchWithAuth from "../utils/fetchWithAuth";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export default function UserHomePage() {
     const { updateSignedIn } = useContext(AuthContext);
     const [serverMsg, setServerMsg] = useState('');
+    const [loading, setLoading] = useState(true);
     const [success, setSuccess] = useState(false);
     const [notStartedVNList, setNotStartedVNList] = useState([]);
     const [startedVNList, setStartedVNList] = useState([]);
@@ -49,14 +51,24 @@ export default function UserHomePage() {
                 setSuccess(false);
                 updateSignedIn();
             }
-            setServerMsg(json.message);       
+            setServerMsg(json.message);
+            setLoading(false);    
         }
         getUserData();
     }, []);
 
     return (<div className="flex flex-col items-center px-8 py-12 bg-gray-50 min-h-screen">
-        <ReadingEntryList category="Continue Reading" entryList={startedVNList} />
-        <ReadingEntryList category="Start Reading" entryList={notStartedVNList} />
-        <ReadingEntryList category="Completed" entryList={completedVNList} />
+        {loading ? <AiOutlineLoading3Quarters className="w-16 h-16 text-primary animate-spin m-3"/> : 
+            (startedVNList.length === 0 && notStartedVNList.length === 0 && completedVNList.length === 0 ? 
+                <div className="p-8">
+                    <span className="text-gray-400">You haven't added any visual novels yet. Use the searchbar to find and add some.</span>
+                </div>
+                : <>
+                    <ReadingEntryList category="Continue Reading" entryList={startedVNList} />
+                    <ReadingEntryList category="Start Reading" entryList={notStartedVNList} />
+                    <ReadingEntryList category="Completed" entryList={completedVNList} />
+                </>
+            )
+        }
     </div>);
 }
