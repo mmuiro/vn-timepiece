@@ -109,6 +109,8 @@ router.get("/home", checkSignedIn, async (req, res) => {
                     vndbID: entry.vn.vndbID,
                     title: entry.vn.title,
                     orginalTitle: entry.vn.originalTitle,
+                    imageLink: entry.vn.imageLink,
+                    imageNSFW: entry.vn.imageNSFW,
                     addedDate: entry.addedDate,
                     started: entry.started,
                     completed: entry.completed,

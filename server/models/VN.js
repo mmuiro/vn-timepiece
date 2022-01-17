@@ -13,6 +13,12 @@ const vnSchema = mongoose.Schema({
     }, 
     originalTitle: {
         type: String
+    },
+    imageLink: {
+        type: String
+    },
+    imageNSFW: {
+        type: Boolean
     }
 });
 

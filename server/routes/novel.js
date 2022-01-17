@@ -2,6 +2,7 @@ import express from 'express';
 import VN from '../models/VN.js';
 import VNReadingEntry from '../models/VNReadingEntry.js';
 import User from '../models/User.js';
+import VNDB from "vndb-api";
 import { checkSignedIn } from '../src/middleware/auth.js';
 const router = express.Router();
 
@@ -10,17 +11,29 @@ router.post("/add", checkSignedIn, async (req, res) => {
         return res.json({success: false, message: "Please send the ID of a visual novel to add."});
     }
     try {
-        const { vndbID, title, originalTitle } = req.body,
+        const { vndbID } = req.body,
             user = req.user;
-        if (!(typeof vndbID === 'string' || typeof vndbID === 'number') || typeof title !== 'string' || typeof originalTitle !== 'string') {
+        if (!(typeof vndbID === 'string' || typeof vndbID === 'number')) {
             return res.json({success: false, message: "Please send valid parameters."});
         }
         let vn = await VN.findOne({ vndbID });
         if (!vn) {
-            // create the global VN entry
-            vn = new VN({ vndbID, title });
-            if (originalTitle) vn.originalTitle = originalTitle;
-            await vn.save();
+            const client = new VNDB('vntp');
+            let vndbRes = await client.query(`get vn basic,details (id = ${vndbID})`);
+            client.destroy();
+            if (vndbRes.status === 'results') {
+                let entry = vndbRes.items[0];
+                vn = new VN({ 
+                    vndbID,
+                    title: entry.title,
+                });
+                if (entry.original) vn.originalTitle = entry.original;
+                if (entry.image) {
+                    vn.imageLink = entry.image;
+                    vn.imageNSFW = entry.image_nsfw;
+                }
+                await vn.save();
+            } else { return res.json({success: false, message: "Couldn't find a visual novel with that ID."})}
         }
         let readingEntry = await VNReadingEntry.findOne({ vn: vn._id, user: user._id });
         if (readingEntry) {

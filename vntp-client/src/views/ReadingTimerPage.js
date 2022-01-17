@@ -160,7 +160,7 @@ export default function ReadingTimerPage() {
         return () => {
             if (sessionStarted && sessionPlayTime >= SESSION_TIME_THRESHOLD && unmounting.current) {
                 endSession();
-                // alert("Ended your session."); 
+                alert("Ended your session."); 
             }
         }
     }, [sessionStarted, endSession, sessionPlayTime])

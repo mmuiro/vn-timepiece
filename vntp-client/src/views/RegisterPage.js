@@ -30,7 +30,7 @@ export default function RegisterPage() {
         }
     }
 
-    return(<div className="flex flex-col items-center py-24 bg-gray-50 min-h-screen">
+    return(<div className="flex flex-col items-center py-24 bg-gradient-to-r from-rose-500 to-pink-500 min-h-screen">
         <FormBody size="w-[26rem] h-fit" title="Register">
             <FormEntry name="Username" setter={(e) => setUsername(e.target.value)} height="h-8" />
             <FormEntry name="Password" setter={(e) => setPassword(e.target.value)}  height="h-8" type="password" />

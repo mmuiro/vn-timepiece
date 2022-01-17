@@ -42,7 +42,6 @@ router.post("/addAction", checkSignedIn, async (req, res) => {
                     let readingTime = Number(req.body.readingTime);
                     newAction.readingTime = readingTime;
                     vnReadingEntry.playTime += readingTime;
-                    // console.log(typeof req.body.readingTime);
                 } else { throw typeCheckerError; }
                 break;
             case 'Modification':

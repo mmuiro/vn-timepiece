@@ -11,6 +11,9 @@ module.exports = {
       },
       fontSize: {
         '10xl': '9rem'
+      },
+      fontFamily: {
+        'work': ['"Work Sans"']
       }
     },
   },

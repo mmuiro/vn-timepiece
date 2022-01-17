@@ -8,7 +8,7 @@ import fetchWithAuth from "../../utils/fetchWithAuth";
 
 const lengths = ["Very Short (<2 hrs)", "Short (2-10 hrs)", "Medium (10-30 hrs)", "Long (30-50 hrs)", "Very Long (50+ hrs)"];
 
-export default function SearchEntryCard({imageURL, imageNSFW, title, originalTitle, originalLang, lengthIndex, id}) {
+export default function SearchEntryCard({imageLink, imageNSFW, title, originalTitle, originalLang, lengthIndex, id}) {
     const [showImg, setShowImg] = useState(!imageNSFW);
     const [showOriginal, setShowOriginal] = useState(false);
     const navigate = useNavigate();
@@ -16,9 +16,7 @@ export default function SearchEntryCard({imageURL, imageNSFW, title, originalTit
     const handleAdd = async (e) => {
         e.preventDefault();
         const url = new URL(process.env.REACT_APP_API_URL + "/api/novel/add")
-        let body = { vndbID: id, title: title };
-        if (originalTitle) body.originalTitle = originalTitle;
-        const res = await fetchWithAuth(url, 'POST', JSON.stringify(body));
+        const res = await fetchWithAuth(url, 'POST', JSON.stringify({ vndbID: id }));
         const json = await res.json();
         if(json.success) {
             navigate("/");
@@ -31,8 +29,8 @@ export default function SearchEntryCard({imageURL, imageNSFW, title, originalTit
     return <div className="transition flex items-start bg-white rounded-md h-32 drop-shadow-md w-[24rem] m-3 hover:-translate-y-1 hover:drop-shadow-xl">
         <div className="h-full w-[28%] shrink-0 grow-0">
             {showImg ? 
-                <img src={imageURL} className="h-full w-full object-cover rounded-l-md mr-0" /> : 
-                <div className="bg-primary rounded-l-md text-white p-1 h-full w-full flex flex-col flex-shrink-0 items-center justify-center text-center text-xs">This image may contain sensitive content.<button onClick={() => setShowImg(true)} className="transition hover:text-primary-light">Show anyways</button></div>
+                <img src={imageLink} className="h-full w-full object-cover rounded-l-md mr-0" /> : 
+                <div className="bg-gradient-to-br from-rose-500 to-pink-600 rounded-l-md text-white p-1 h-full w-full flex flex-col flex-shrink-0 items-center justify-center text-center text-xs">This image may contain sensitive content.<button onClick={() => setShowImg(true)} className="transition hover:text-primary-light">Show anyways</button></div>
             }
         </div>
         <div className="relative flex flex-col w-[64%] shrink h-full py-3 mx-4 grow-0">
