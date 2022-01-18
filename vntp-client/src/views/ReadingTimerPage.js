@@ -120,7 +120,7 @@ export default function ReadingTimerPage() {
                 setEntryState({ title: json.readingEntryData.title, completed: json.readingEntryData.completed });
                 setLoading(false);
             } else {
-                updateSignedIn();
+                navigate('/');
             }
         };
         initTimer();
@@ -165,17 +165,19 @@ export default function ReadingTimerPage() {
         }
     }, [sessionStarted, endSession, sessionPlayTime])
 
-    return (<div className="flex flex-col items-center px-8 py-12 bg-gray-50 min-h-screen">
+    return (<div className="flex flex-col items-center px-8 py-8 bg-gray-100 min-h-screen">
         {loading ? <AiOutlineLoading3Quarters className="w-16 h-16 text-primary animate-spin m-3"/> : 
         <>
-            <span>{entryState.title}</span>
+            <span className="text-lg mb-2">{entryState.title}</span>
             {!entryState.completed ? 
                 <>
+                    <span className="border-b-2 border-primary">Session Time</span>
                     <TimeDisplay timeInMs={sessionPlayTime} showButtons={sessionStarted && paused} updateTime={(v) => {
                         let change = Math.max(v, -sessionPlayTime);
                         updateSessionTime({amountInMs: change});
                         updateTotalTime({amountInMs: change});
                     }}/>
+                    <span className="border-b-2 border-primary mt-2">Total Time</span>
                     <span className="text-7xl my-4">{msToTimeDisplayString(totalPlayTime)}</span>
                     {paused && <>
                         <Button clickFn={() => setShowTimeModal(true)} size="w-40 h-8" margin="m-4"><span className="text-white font-medium">Modify</span></Button>
@@ -194,8 +196,10 @@ export default function ReadingTimerPage() {
                             <Button size="w-16 h-16" margin="m-4" rounding="rounded-full" clickFn={eventWrapper(() => setPaused(false))}><BsFillPlayFill className="text-white w-[60%] h-[60%] ml-0.5"/></Button> :
                             <Button size="w-16 h-16" margin="m-4" rounding="rounded-full" clickFn={eventWrapper(() => setPaused(true))}><BsPauseFill className="text-white w-[60%] h-[60%]"/></Button>
                         }
-                        <Button size="w-48 h-8" margin="m-4" clickFn={eventWrapper(() => navigate('/'))}><span className="text-white font-medium">End Session</span></Button>
-                        <Button size="w-48 h-8" margin="m-4" clickFn={eventWrapper(completeVN)}><span className="text-white font-medium">Mark as Completed</span></Button>
+                        <div className="flex">
+                            <Button size="w-48 h-8" margin="m-4" clickFn={eventWrapper(() => navigate('/'))}><span className="text-white font-medium">End Session</span></Button>
+                            <Button size="w-48 h-8" margin="m-4" clickFn={eventWrapper(completeVN)}><span className="text-white font-medium">Mark as Completed</span></Button>
+                        </div>
                     </>) : 
                 <Button size="w-40 h-8" margin="m-4" clickFn={eventWrapper(revertVNCompletion)}><span className="text-white font-medium">Mark as Incomplete</span></Button>
             }

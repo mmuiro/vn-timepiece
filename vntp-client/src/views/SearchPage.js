@@ -55,7 +55,7 @@ export default function SearchPage() {
         if (searchQuery) setSearchParams({ query: searchQuery });
     };
 
-    return(<div className="flex flex-col items-center p-4 bg-gray-50 min-h-screen max-w-7xl">
+    return(<div className="flex flex-col items-center p-4 bg-gray-100 min-h-screen max-w-7xl">
         <SearchbarLarge changeFn={e => setSearchQuery(e.target.value)} submitFn={handleSearch} value={searchQuery ? searchQuery : ''} />
         <span className="text-sm mt-2">Provided by <a href="https://vndb.org/" className="transition inline text-rose-500 no-underline hover:text-rose-300">VNDB</a> under the <a href="https://opendatacommons.org/licenses/odbl/1-0/" className="transition inline text-rose-500 no-underline hover:text-rose-300">Open Database License</a></span>
         <div className="flex justify-center flex-wrap mx-auto w-full">

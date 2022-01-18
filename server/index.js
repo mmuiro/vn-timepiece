@@ -10,7 +10,7 @@ import { processAuthToken } from "./src/middleware/auth.js";
 
 const app = express();
 dotenv.config();
-mongoose.connect(process.env.MONGOOSE_DB_URL);
+mongoose.connect(`mongodb://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@${process.env.MONGO_DB_HOST}:${process.env.MONGO_DB_PORT}/vntp`);
 const db = mongoose.connection;
 db.on('error', error => console.log(error));
 db.once('open', () => console.log('Connected to Mongoose DB.'));

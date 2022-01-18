@@ -11,16 +11,17 @@ router.post("/add", checkSignedIn, async (req, res) => {
         return res.json({success: false, message: "Please send the ID of a visual novel to add."});
     }
     try {
-        const { vndbID } = req.body,
+        let vndbID = req.body.vndbID,
             user = req.user;
-        if (!(typeof vndbID === 'string' || typeof vndbID === 'number')) {
+        vndbID = parseInt(vndbID);
+        if (!typeof vndbID === 'number') {
             return res.json({success: false, message: "Please send valid parameters."});
         }
         let vn = await VN.findOne({ vndbID });
         if (!vn) {
             const client = new VNDB('vntp');
             let vndbRes = await client.query(`get vn basic,details (id = ${vndbID})`);
-            client.destroy();
+            await client.destroy();
             if (vndbRes.status === 'results') {
                 let entry = vndbRes.items[0];
                 vn = new VN({ 

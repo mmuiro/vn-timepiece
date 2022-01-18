@@ -11,6 +11,8 @@ const router = express.Router();
 const USERNAME_MIN_LENGTH = 5;
 const PASSWORD_MIN_LENGTH = 8;
 
+const pwdCheck = (password) => (/^(?=.*[A-Z])(?=.*\d)(?=.*[\.!@$%*$&_\?])[a-zA-Z\d\.!@$%*$&_\?]+$/.test(password) && password.length >= PASSWORD_MIN_LENGTH);
+
 router.post("/register", async (req, res) => {
     if (!req.body) {
         return res.json({ success: false, message: "Please send information to register with." });
@@ -19,7 +21,7 @@ router.post("/register", async (req, res) => {
     try {
         if (typeof username !== 'string' || !/^[a-zA-Z\d_]+$/.test(username) || username.length < USERNAME_MIN_LENGTH) {
             return res.json({ success: false, message: `Username must be at least ${USERNAME_MIN_LENGTH} characters with only letters, numbers, and underscores.`});
-        } else if (typeof password !== 'string' || !/^(?=.*[A-Z])(?=.*\d)(?=.*[\.!@$%*$&_\?])[a-zA-Z\d\.!@$%*$&_\?]+$/.test(password) || password.length < PASSWORD_MIN_LENGTH) {
+        } else if (typeof password !== 'string' || !pwdCheck(password)) {
             return res.json({ success: false, message: `Password must be at least ${PASSWORD_MIN_LENGTH} characters with at least one uppercase letter, one digit, and one symbol.`});
         } else if (typeof email !== 'string' || !validator.isEmail(email)) {
             return res.json({ success: false, message: "Invalid email."});
@@ -61,7 +63,7 @@ router.post("/login", async (req, res) => {
                 email: user.email,
                 signedIn: true
             }, process.env.JWT_SECRET, {
-                expiresIn: 86400
+                expiresIn: 86400 * 30
             });
             return res.json({success: true, authToken: authToken, message: "Login successful." });
         }
@@ -156,6 +158,26 @@ router.get("/history", checkSignedIn, async (req, res) => {
     } catch (err) {
         console.log(err);
         return res.json({success: false, message: "There was an error in processing your request."});
+    }
+});
+
+router.post("/changePassword", checkSignedIn, async (req, res) => {
+    if (!req.body) return res.json({success: false, message: "Please send valid data."});
+    let { password, newPassword } = req.body;
+    if (typeof password !== 'string' || typeof newPassword !== 'string') return res.json({success: false, message: "Invalid parameters."});
+    if (!pwdCheck(newPassword)) return res.json({success: false, message: `Password must be at least ${PASSWORD_MIN_LENGTH} characters with at least one uppercase letter, one digit, and one symbol.`});
+    const user = req.user;
+    try {
+        const pwdCorrect = await bcrypt.compare(password, user.password);
+        if (pwdCorrect) {
+            let newPasswordHash = await bcrypt.hash(newPassword, 12);
+            user.password = newPasswordHash;
+            await user.save();
+            return res.json({success: true, message: "Your password was updated."});
+        } else { return res.json({success: false, message: "Incorrect password."}); }
+    } catch (err) {
+        console.log(err);
+        return res.json({success: false, message: "An error occurred while processing your request."});
     }
 });
 

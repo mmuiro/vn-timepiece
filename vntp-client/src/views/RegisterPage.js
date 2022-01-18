@@ -38,6 +38,5 @@ export default function RegisterPage() {
             <Button clickFn={handleRegister} size="w-full h-8" margin="my-6"><span className="text-white font-medium">Register</span></Button>
             {serverMsg !== '' && <p className={`text-center ${success ? "text-green-500" : "text-red-500"}`}>{serverMsg}</p>}
         </FormBody>
-        
     </div>);
 }

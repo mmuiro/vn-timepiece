@@ -14,7 +14,8 @@ router.post("/addAction", checkSignedIn, async (req, res) => {
     try {
         let { vndbID, type } = req.body,
             user = req.user;
-        if ((typeof vndbID === 'string' && typeof vndbID === 'number') ||  typeof type !== 'string') return res.json({success: false, message: "Please provide a valid action."});
+        vndbID = parseInt(vndbID);
+        if (typeof vndbID === 'number' ||  typeof type !== 'string') return res.json({success: false, message: "Please provide a valid action."});
         const vn = await VN.findOne({ vndbID });
         let currentDate = new Date();
         if (!vn) return res.json({success: false, message: "Please add that VN first."});
@@ -40,6 +41,7 @@ router.post("/addAction", checkSignedIn, async (req, res) => {
             case 'Reading':
                 if (vnReadingEntry.started && !vnReadingEntry.completed) {
                     let readingTime = Number(req.body.readingTime);
+                    if (typeof readingTime !== 'number') return res.json({success: false, message: "Please provide a valid action."});
                     newAction.readingTime = readingTime;
                     vnReadingEntry.playTime += readingTime;
                 } else { throw typeCheckerError; }
@@ -47,7 +49,7 @@ router.post("/addAction", checkSignedIn, async (req, res) => {
             case 'Modification':
                 if (vnReadingEntry.started) {
                     let modifiedPlayTime = Number(req.body.modifiedPlayTime);
-                    if (modifiedPlayTime < 0) return res.json({success: false, message: "Please provide a valid action."});
+                    if (typeof modifiedPlayTime !== 'number' || modifiedPlayTime < 0) return res.json({success: false, message: "Please provide a valid action."});
                     newAction.originalPlayTime = vnReadingEntry.playTime;
                     newAction.modifiedPlayTime = modifiedPlayTime;
                     vnReadingEntry.playTime = modifiedPlayTime;

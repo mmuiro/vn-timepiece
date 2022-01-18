@@ -5,12 +5,15 @@ import Button from "../Buttons/Button";
 import Toggle from "../Toggle";
 import { useNavigate } from "react-router-dom";
 import fetchWithAuth from "../../utils/fetchWithAuth";
+import Modal from "../Modal";
 
 const lengths = ["Very Short (<2 hrs)", "Short (2-10 hrs)", "Medium (10-30 hrs)", "Long (30-50 hrs)", "Very Long (50+ hrs)"];
 
 export default function SearchEntryCard({imageLink, imageNSFW, title, originalTitle, originalLang, lengthIndex, id}) {
     const [showImg, setShowImg] = useState(!imageNSFW);
     const [showOriginal, setShowOriginal] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [serverMsg, setServerMsg] = useState('');
     const navigate = useNavigate();
 
     const handleAdd = async (e) => {
@@ -21,8 +24,8 @@ export default function SearchEntryCard({imageLink, imageNSFW, title, originalTi
         if(json.success) {
             navigate("/");
         } else {
-            // create pop up of failure.
-            alert(json.message);
+            setServerMsg(json.message);
+            setShowModal(true);
         }
     }
 
@@ -46,5 +49,13 @@ export default function SearchEntryCard({imageLink, imageNSFW, title, originalTi
                 <Button size="w-[40%] h-full" clickFn={handleAdd}><span className="text-white font-medium">Add</span></Button>
             </div>
         </div>
+        {showModal && 
+            <Modal show={showModal} close={() => setShowModal(false)}>
+                <div className="max-w-[64rem] flex flex-col items-center">
+                    <span className="whitespace-normal text-red-500 mb-4">{serverMsg}</span>
+                    <Button clickFn={() => setShowModal(false)} size="w-20 h-8"><span className="text-white font-medium">Close</span></Button>
+                </div>
+            </Modal>
+        }
     </div>
 }
