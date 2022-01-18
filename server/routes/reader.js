@@ -15,7 +15,7 @@ router.post("/addAction", checkSignedIn, async (req, res) => {
         let { vndbID, type } = req.body,
             user = req.user;
         vndbID = parseInt(vndbID);
-        if (typeof vndbID === 'number' ||  typeof type !== 'string') return res.json({success: false, message: "Please provide a valid action."});
+        if (typeof vndbID !== 'number' ||  typeof type !== 'string') return res.json({success: false, message: "Please provide a valid action."});
         const vn = await VN.findOne({ vndbID });
         let currentDate = new Date();
         if (!vn) return res.json({success: false, message: "Please add that VN first."});

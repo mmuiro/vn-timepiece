@@ -14,7 +14,7 @@ function AuthContextProvider({ children }) {
 
     async function updateSignedIn() {
         setLoading(true);
-        const res = await fetchWithAuth(process.env.REACT_APP_API_URL + "/api/user/auth", 'GET');
+        const res = await fetchWithAuth("/api/user/auth", 'GET');
         const json = await res.json();
         if (json.success) {
             setAuthState({

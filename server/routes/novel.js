@@ -14,7 +14,7 @@ router.post("/add", checkSignedIn, async (req, res) => {
         let vndbID = req.body.vndbID,
             user = req.user;
         vndbID = parseInt(vndbID);
-        if (!typeof vndbID === 'number') {
+        if (typeof vndbID !== 'number') {
             return res.json({success: false, message: "Please send valid parameters."});
         }
         let vn = await VN.findOne({ vndbID });
