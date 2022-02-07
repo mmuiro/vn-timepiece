@@ -1,8 +1,14 @@
 import express from "express";
 import VNDB from "vndb-api";
 import redis from "redis";
+import dotenv from "dotenv";
 const router = express.Router();
-const redisClient = redis.createClient({ url: process.env.REDIS_HOST });
+dotenv.config();
+const redisClient = redis.createClient({ 
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT,
+    password: process.env.REDIS_PASSWORD
+ });
 redisClient.connect();
 const DEFAULT_EXP = 3600;
 
