@@ -57,7 +57,7 @@ export default function UserHomePage() {
         getUserData();
     }, []);
 
-    return (<div className="flex flex-col items-center px-8 py-12 bg-gray-100 min-h-screen">
+    return (<div className="flex flex-col items-center px-8 py-12 bg-gray-100">
         {loading ? <AiOutlineLoading3Quarters className="w-16 h-16 text-primary animate-spin m-3"/> : 
             (startedVNList.length === 0 && notStartedVNList.length === 0 && completedVNList.length === 0 ? 
                 <div className="p-8">

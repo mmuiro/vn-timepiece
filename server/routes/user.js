@@ -11,7 +11,7 @@ const router = express.Router();
 const USERNAME_MIN_LENGTH = 5;
 const PASSWORD_MIN_LENGTH = 8;
 
-const pwdCheck = (password) => (/^(?=.*[A-Z])(?=.*\d)(?=.*[\.!@$%*$&_\?])[a-zA-Z\d\.!@$%*$&_\?]+$/.test(password) && password.length >= PASSWORD_MIN_LENGTH);
+const pwdCheck = (password) => (/^(?=.*[A-Z])(?=.*\d)(?=.*[\.!@$%*&_#^\?])[a-zA-Z\d\.!@$%*&_#^\?]+$/.test(password) && password.length >= PASSWORD_MIN_LENGTH);
 
 router.post("/register", async (req, res) => {
     if (!req.body) {

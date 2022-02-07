@@ -29,7 +29,7 @@ export default function HistoryPage() {
         getHistory();
     }, []);
 
-    return (<div className="flex flex-col items-center px-8 py-12 bg-gray-100 min-h-screen">
+    return (<div className="flex flex-col items-center px-8 py-12 bg-gray-100 max-w-7xl mx-auto">
         {loading ? <AiOutlineLoading3Quarters className="w-16 h-16 text-primary animate-spin m-3"/> : 
             (actionList.length > 0 ? <ActionList username={authState.username} actionList={actionList} /> : 
                 <div className="p-6 text-gray-400">You haven't added or started any visual novels yet. Start by searching for and adding some visual novels.</div>

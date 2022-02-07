@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export default function InstructionPage() {
-    return (<div className="bg-gray-100 min-h-screen flex justify-center px-8 py-12">
+    return (<div className="bg-gray-100 flex justify-center px-8 py-12">
         <div className="bg-white rounded-lg drop-shadow-lg flex flex-col items-start p-8 max-w-[60%] space-y-4">
             <span className="text-2xl font-semibold leading-normal">How to use this site</span>
             <div className="flex flex-col">

@@ -36,7 +36,7 @@ export default function ProfilePage() {
         };
     }, [location]);
 
-    return (<div className="flex flex-col items-center py-24 bg-gray-100 min-h-screen">
+    return (<div className="flex flex-col items-center py-24 bg-gray-100">
         {loaded ? <ProfileCard {...userData} size="w-max-content"></ProfileCard> : null}
     </div>);
 }

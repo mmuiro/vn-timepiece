@@ -22,7 +22,9 @@ vntp-client/yarn-debug.log*
 vntp-client/yarn-error.log*
 
 vntp-client/.env
+vntp-client/src/setupProxy.js
 
 # --- SERVERSIDE ---
 server/node_modules
 server/.env
+server/serve

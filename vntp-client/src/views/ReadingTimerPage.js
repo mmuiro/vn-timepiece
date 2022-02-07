@@ -165,7 +165,7 @@ export default function ReadingTimerPage() {
         }
     }, [sessionStarted, endSession, sessionPlayTime])
 
-    return (<div className="flex flex-col items-center px-8 py-8 bg-gray-100 min-h-screen">
+    return (<div className="flex flex-col items-center px-8 py-8 bg-gray-100">
         {loading ? <AiOutlineLoading3Quarters className="w-16 h-16 text-primary animate-spin m-3"/> : 
         <>
             <span className="text-lg mb-2">{entryState.title}</span>

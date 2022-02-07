@@ -9,7 +9,7 @@ import Searchbar from "./Searchbar";
 export default function Navbar() {
     const { authState } = useContext(AuthContext);
     return(<>
-    <nav className="bg-gradient-to-r from from-rose-500 to-pink-500">
+    <nav className="bg-gradient-to-r from-rose-500 to-pink-500">
         <div className="max-w-7xl mx-auto">
             <div className="h-14 px-10 flex items-center justify-between">
                 <div className="flex items-center justify-between">
