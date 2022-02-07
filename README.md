@@ -6,8 +6,6 @@ Hosted at [vntp.qopri.me](https://vntp.qopri.me).
 
 ## Features
 
----
-
 - Visual novel lookup using [VNDB's Public Database API](https://vndb.org/d11)
 - Timer display and functionality for use in the background while reading
 - Manual reading time adjustment
@@ -17,8 +15,6 @@ Hosted at [vntp.qopri.me](https://vntp.qopri.me).
 Check out the [help page](https://vntp.qopri.me/howto) for more details.
 
 ## Screenshots
-
----
 
 ![Screenshot 1](/screenshots/sc1.png)
 
@@ -37,3 +33,7 @@ Check out the [help page](https://vntp.qopri.me/howto) for more details.
 ![Screenshot 8](/screenshots/sc8.png)
 
 ![Screenshot 9](/screenshots/sc9.png)
+
+## License
+
+[MIT License](https://choosealicense.com/licenses/mit/)
