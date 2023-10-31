@@ -39,7 +39,7 @@ export default function ReadingTimerPage() {
     let timeoutID;
 
     const endSession = useCallback(async () => {
-        const res = await fetchWithAuth("api/reader/addAction", "POST", JSON.stringify({
+        const res = await fetchWithAuth("/api/reader/addAction", "POST", JSON.stringify({
             vndbID,
             type: 'Reading',
             readingTime: sessionPlayTime
@@ -68,7 +68,7 @@ export default function ReadingTimerPage() {
 
     const completeVN = useCallback(async () => {
         if (sessionStarted && sessionPlayTime >= SESSION_TIME_THRESHOLD) await endSession();
-        const res = await fetchWithAuth('/api/reader/addAction', 'POST', JSON.stringify({
+        const res = await fetchWithAuth("/api/reader/addAction", "POST", JSON.stringify({
             vndbID,
             type: 'Completion'
         }));
@@ -82,7 +82,7 @@ export default function ReadingTimerPage() {
     }, [setSessionStarted, sessionStarted, endSession]);
 
     const revertVNCompletion = useCallback(async () => {
-        const res = await fetchWithAuth('/api/reader/addAction', 'POST', JSON.stringify({
+        const res = await fetchWithAuth("/api/reader/addAction", "POST", JSON.stringify({
             vndbID,
             type: 'CompletionReversion'
         }));
@@ -111,7 +111,7 @@ export default function ReadingTimerPage() {
 
     useEffect(() => {
         const initTimer = async () => {
-            const url = new URL(process.env.REACT_APP_API_URL + "/api/reader/view");
+            const url = new URL("https://vntp.qopri.me/api/reader/view");
             url.searchParams.append("id", vndbID);
             const res = await fetchWithAuth(url, 'GET');
             const json = await res.json();

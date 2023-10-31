@@ -30,7 +30,7 @@ export default function SearchPage() {
     useEffect(() => {
         const performVNDBSearch = async (searchQuery) => {
             try {
-                const url = new URL("api/search/fetch");
+                const url = new URL("https://vntp.qopri.me/api/search/fetch");
                 url.searchParams.append("searchQuery", searchQuery);
                 url.searchParams.append("page", currentPage);
                 const res = await fetchWithAuth(url, 'GET');
@@ -43,7 +43,9 @@ export default function SearchPage() {
                     setSearchReady(false);
                     setLoading(false);
                 }
-            } catch { }
+            } catch (err) { 
+                console.error(err);
+            }
         };
         if (searchReady && searchQuery !== null && searchQuery !== '') {
             performVNDBSearch(searchQuery);

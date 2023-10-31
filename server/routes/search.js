@@ -8,8 +8,10 @@ const redisClient = redis.createClient({
     host: process.env.REDIS_HOST,
     port: process.env.REDIS_PORT,
     password: process.env.REDIS_PASSWORD
- });
-redisClient.connect();
+});
+await redisClient.connect();
+console.log("redis client connected");
+
 const DEFAULT_EXP = 3600;
 
 router.get('/fetch', async (req, res) => {

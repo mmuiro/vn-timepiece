@@ -18,7 +18,7 @@ export default function SearchEntryCard({imageLink, imageNSFW, title, originalTi
 
     const handleAdd = async (e) => {
         e.preventDefault();
-        const url = new URL("api/novel/add")
+        const url = new URL("https://vntp.qopri.me/api/novel/add")
         const res = await fetchWithAuth(url, 'POST', JSON.stringify({ vndbID: id }));
         const json = await res.json();
         if(json.success) {
