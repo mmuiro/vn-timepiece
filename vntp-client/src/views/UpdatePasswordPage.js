@@ -21,7 +21,7 @@ export default function UpdatePasswordPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const res = await fetchWithAuth(process.env.REACT_APP_API_URL + '/api/user/changePassword', 'POST',
+        const res = await fetchWithAuth("api/user/changePassword", "POST",
             JSON.stringify({
                 password,
                 newPassword

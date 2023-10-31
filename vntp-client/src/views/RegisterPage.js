@@ -14,7 +14,7 @@ export default function RegisterPage() {
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        const res = await fetchWithAuth(process.env.REACT_APP_API_URL + '/api/user/register', 'POST',
+        const res = await fetchWithAuth("api/user/register", "POST",
             JSON.stringify({
                 username: username,
                 password: password,

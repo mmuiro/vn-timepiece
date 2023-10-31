@@ -39,7 +39,7 @@ export default function ReadingTimerPage() {
     let timeoutID;
 
     const endSession = useCallback(async () => {
-        const res = await fetchWithAuth('/api/reader/addAction', 'POST', JSON.stringify({
+        const res = await fetchWithAuth("api/reader/addAction", "POST", JSON.stringify({
             vndbID,
             type: 'Reading',
             readingTime: sessionPlayTime

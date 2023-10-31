@@ -30,7 +30,7 @@ export default function SearchPage() {
     useEffect(() => {
         const performVNDBSearch = async (searchQuery) => {
             try {
-                const url = new URL(process.env.REACT_APP_API_URL + "/api/search/fetch");
+                const url = new URL("api/search/fetch");
                 url.searchParams.append("searchQuery", searchQuery);
                 url.searchParams.append("page", currentPage);
                 const res = await fetchWithAuth(url, 'GET');
